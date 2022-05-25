@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{%block content%}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" >
+            <h2>Gestión de Curso</h2>
+            <div class="card py-2">
+                <div class="card-body">
+                    <form action="/registrarCurso/" method="POST"> {% csrf_token %} <!-- el CSRF Protege de acciones maliciosas en nuestros formularios-->
+                        <div class="form-group py-2">
+                            <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Código" minlength="6" maxlength="6" required>
+
+                        </div>
+                        <div class="form-group py-2">
+
+                            <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" maxlength="50" required>
+
+                        </div>
+
+                        <div class="form-group py-2">
+
+                            <input type="text" id="numCreditos" name="numCreditos" class="form-control" min="1" maxl="9" required>
+
+                        </div>
+
+                        <div class="form-group py-2">
+
+                            <button class="btn btn-success btn-block text-white" type="submit">Guardar</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Listado de Cursos</h2>
+            <div class="table-responsive py-2">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Créditos</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {%for c in cursos%}
+                            <tr>
+                                <td>{{c.codigo}}</td>
+                                <td>{{c.nombre}}</td>
+                                <td>{{c.creditos}}</td>
+                                <td><a href="edicionCurso/{{c.codigo}}" class="btn btn-info">Editar</a></td>
+                                <td><a href="eliminarCurso/{{c.codigo}}" class="btn btn-danger">Eliminar</a></td>
+                            </tr>
+                        {%endfor%}
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{%endblock%}
